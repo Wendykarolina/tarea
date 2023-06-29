@@ -20,4 +20,8 @@
       $this->db->where("id_cand",$id);
       return $this->db->delete('candidato');
     }
+    function actualizar($id_cand,$datos){
+      $this->db->where("id_cand",$id_cand);
+      return $this->db->update('candidato',$datos);
+  }
   }//no cerrar

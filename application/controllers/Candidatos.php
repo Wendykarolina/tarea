@@ -72,5 +72,36 @@ class Candidatos extends CI_Controller {
 		}
 		redirect('candidatos/index');
 	}
+	public function editar($id_cand){
+		$data["candidatoEditar"]=$this->Candidato->obtenerPorId($id_cand);
+		$this->load->view('header');
+		$this->load->view('candidatos/editar',$data);
+		$this->load->view('footer');
+	}
+public function procesarActualizaciones(){
+	$datosEditados=array(
+		"dignidad_cand"=>$this->input->post("dignidad_cand"),
+		"nombre_cand"=>$this->input->post("nombre_cand"),
+		"apellido_cand"=>$this->input->post("apellido_cand"),
+		"movimiento_cand"=>$this->input->post("movimiento_cand"),
+		"cedula_cand"=>$this->input->post("cedula_cand"),
+		"correo_cand"=>$this->input->post("correo_cand"),
+		"telefono_cand"=>$this->input->post("telefono_cand"),
+		"latitud_cand"=>$this->input->post("latitud_cand"),
+		"longitud_cand"=>$this->input->post("longitud_cand")
+	);
+$id_cand=$this->input->post("id_cand");
+if($this->Candidato->actualizar($id_cand,$datosEditados)){
+		$this->session->set_flashdata("confirmacion","Candidato actualizado existosamente");
+		redirect("candidatos/index");
+}else{
+		$this->session->set_flashdata("error","Error al actualizar intente de nuevo");
+		// echo "ERROR AL ACTULIZAR :(";
+}
+	redirect("candidatos/index");
+}
+
+
+
 
 }//no cerrar
